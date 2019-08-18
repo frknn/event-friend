@@ -10,3 +10,19 @@ export const fetchEvents = () => dispatch => {
       })
     );
 };
+
+export const createEvent = (eventData) => dispatch => {
+  fetch("http://localhost:8080/event", {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(eventData)
+  })
+    .then(res => res.json())
+    .then(event =>
+      dispatch({
+        type: NEW_EVENT,
+        payload: event
+      }));
+}

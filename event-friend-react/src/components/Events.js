@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchEvents } from '../actions/eventActions'
 import Event from "./Event";
@@ -29,6 +30,11 @@ class Events extends Component {
       </div>
     )
   }
+}
+
+Events.propTypes = {
+  fetchEvents: PropTypes.func.isRequired,
+  events: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({

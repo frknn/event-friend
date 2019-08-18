@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createEvent, fetchEvents } from '../actions/eventActions';
+
 
 class EventForm extends Component {
 
@@ -1516,13 +1520,8 @@ class EventForm extends Component {
       kacKisi: this.state.kisi
     }
 
-    fetch("http://localhost:8080/event",{
-      method: 'POST',
-      headers: {
-        'content-type':'application/json'
-      },
-      body: JSON.stringify(post)
-    }).then(res=>res.json()).then(data => console.log(data));
+    this.props.createEvent(post);
+    this.props.fetchEvents();
   }
 
   render() {
@@ -1572,4 +1571,14 @@ class EventForm extends Component {
   }
 }
 
-export default EventForm;
+EventForm.propTypes = {
+  fetchEvents: PropTypes.func.isRequired,
+  createEvent: PropTypes.func.isRequired,
+  event: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  events: state.events.item
+})
+
+export default connect(mapStateToProps, { createEvent, fetchEvents })(EventForm);
