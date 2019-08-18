@@ -15,7 +15,7 @@ class Events extends Component {
       this.props.events.unshift(nextProps.newEvent);
     }
     if (nextProps.deletedId) {
-      
+
     }
   }
 
@@ -35,7 +35,11 @@ class Events extends Component {
     ))
     return (
       <div className="container">
-        {content}
+        <h1 className="mt-3">Etkinlikler</h1>
+        <hr />
+        <div> 
+          {content}
+        </div>
       </div>
     )
   }

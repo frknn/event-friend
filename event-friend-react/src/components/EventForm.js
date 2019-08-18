@@ -1537,7 +1537,9 @@ class EventForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onSubmit} className="col-md-6">
+        <h1 className="mt-3">Ne Düzenliyorsun?</h1>
+        <hr/>
+        <form onSubmit={this.onSubmit} className="col-md-8 mx-auto">
           <div className="form-group">
             <label htmlFor="inputBaslik">Başlık</label>
             <input onChange={this.onChange} type="text" className="form-control" id="inputBaslik" name="baslik" placeholder="Etkinlik başlığı giriniz." value={this.state.baslik} />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteEvent,fetchEvents } from '../actions/eventActions';
+import { deleteEvent, fetchEvents } from '../actions/eventActions';
 
 class Event extends Component {
 
@@ -15,7 +15,7 @@ class Event extends Component {
     const { id, baslik, kacKisi, detay, etkinlikAdresi, il, ilce, bulusmaYeri } = this.props;
 
     return (
-      <div className="col-md-6 mt-4">
+      <div className="col-md-6 mt-3 mb-3" style={{float:"left"}}>
         <div className="card">
           <div className="card-header d-flex justify-content-between">
             <h4 className="d-inline">Post id: {id}</h4>
@@ -33,10 +33,9 @@ class Event extends Component {
             <p className="card-text"><b>Buluşma Yeri:</b> {bulusmaYeri}</p>
 
           </div>
-
         </div>
-
       </div>
+
     )
   }
 }
@@ -46,4 +45,4 @@ Event.propTypes = {
   fetchEvents: PropTypes.func.isRequired
 }
 
-export default connect(null, { deleteEvent,fetchEvents })(Event);
+export default connect(null, { deleteEvent, fetchEvents })(Event);
