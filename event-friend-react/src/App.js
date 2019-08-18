@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
+import './App.css';
+import { Provider } from 'react-redux';
+
 import Events from './components/Events';
 import EventForm from './components/EventForm';
 
-import './App.css';
+import store from './store';
 
-function App() {
-  return (
-    <div className="App">
-      <div className="container">
-        <EventForm />
-        <hr/>
-        <Events />
-      </div>
+class App extends Component {
+  render() {
+    return (
+      <Provider store={store} >
+        <div className="App">
+          <div className="container">
+            <EventForm />
+            <hr />
+            <Events />
+          </div>
+        </div>
+      </Provider>
+    );
+  }
 
-    </div>
-  );
 }
 
 export default App;

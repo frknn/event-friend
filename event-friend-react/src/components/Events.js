@@ -1,36 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchEvents } from '../actions/eventActions'
 import Event from "./Event";
 
 class Events extends Component {
 
-  constructor(props){
-    super(props);
-
-    this.state = {
-      posts: []
-    }
-  }
-
-  componentWillMount(){
-    fetch("http://localhost:8080/event")
-    .then(res => res.json())
-    .then(data => this.setState({
-      posts: data
-    }))
+  componentWillMount() {
+    this.props.fetchEvents();
   }
 
   render() {
-    let content = this.state.posts.map(post => (
+    let content = this.props.events.map(event => (
       <Event
-        key = {post.id}
-        id = {post.id}
-        baslik = {post.baslik}
-        kacKisi = {post.kacKisi}
-        detay = {post.detay}
-        etkinlikAdresi = {post.etkinlikAdresi}
-        il = {post.il}
-        ilce = {post.ilce}
-        bulusmaYeri = {post.bulusmaYeri} 
+        key={event.id}
+        id={event.id}
+        baslik={event.baslik}
+        kacKisi={event.kacKisi}
+        detay={event.detay}
+        etkinlikAdresi={event.etkinlikAdresi}
+        il={event.il}
+        ilce={event.ilce}
+        bulusmaYeri={event.bulusmaYeri}
       />
     ))
     return (
@@ -41,4 +31,8 @@ class Events extends Component {
   }
 }
 
-export default Events;
+const mapStateToProps = state => ({
+  events: state.events.items
+})
+
+export default connect(mapStateToProps, { fetchEvents })(Events);
