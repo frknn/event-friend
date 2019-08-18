@@ -1,0 +1,2 @@
+insert into event (baslik,bulusma_yeri,detay,etkinlik_adresi,il,ilce,kac_kisi) values ('Halı Saha','100.Yıl Halı Sahası','Yarın akşam 8-9 saatlerinde halı sahaya 2 kişi eksiğimiz var.','100.Yıl Mah. Kemalpaşa Sokak.','Karabük','Merkez',2)
+insert into event (baslik,bulusma_yeri,detay,etkinlik_adresi,il,ilce,kac_kisi) values ('Konser','Çarşı','Konsere fazladan bir biletim var','Bağlar Mahallesi Fevzi Çakmak Caddesi, Espark','Eskişehir','Tepebaşı',1)
