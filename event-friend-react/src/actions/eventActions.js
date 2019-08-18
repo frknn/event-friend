@@ -1,4 +1,4 @@
-import { FETCH_EVENTS, NEW_EVENT } from './types';
+import { FETCH_EVENTS, NEW_EVENT, DELETE_EVENT } from './types';
 
 export const fetchEvents = () => dispatch => {
   fetch("http://localhost:8080/event")
@@ -11,7 +11,7 @@ export const fetchEvents = () => dispatch => {
     );
 };
 
-export const createEvent = (eventData) => dispatch => {
+export const createEvent = eventData => dispatch => {
   fetch("http://localhost:8080/event", {
     method: 'POST',
     headers: {
@@ -24,5 +24,17 @@ export const createEvent = (eventData) => dispatch => {
       dispatch({
         type: NEW_EVENT,
         payload: event
-      }));
-}
+      })
+    );
+};
+
+export const deleteEvent = id => dispatch => {
+  console.log("SİLİNİYOR!");
+  fetch(`http://localhost:8080/event/${id}`, {method: 'DELETE'})
+    .then(() =>
+      dispatch({
+        type: DELETE_EVENT,
+        payload: id
+      })
+    );
+};

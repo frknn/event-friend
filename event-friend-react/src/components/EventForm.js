@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createEvent, fetchEvents } from '../actions/eventActions';
+import { createEvent } from '../actions/eventActions';
 
+const clearFields = {
+  baslik: "",
+  adres: "",
+  bulusma: "",
+  il: "",
+  ilce: "",
+  kisi: 0,
+  detay: "",
+  secilenSehir: ""
+}
 
 class EventForm extends Component {
 
@@ -1489,7 +1499,6 @@ class EventForm extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
   }
 
   onChange(e) {
@@ -1508,8 +1517,9 @@ class EventForm extends Component {
     }
   }
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
+
     let post = {
       baslik: this.state.baslik,
       bulusmaYeri: this.state.bulusma,
@@ -1521,7 +1531,7 @@ class EventForm extends Component {
     }
 
     this.props.createEvent(post);
-    this.props.fetchEvents();
+    this.setState(clearFields);
   }
 
   render() {
@@ -1572,13 +1582,8 @@ class EventForm extends Component {
 }
 
 EventForm.propTypes = {
-  fetchEvents: PropTypes.func.isRequired,
   createEvent: PropTypes.func.isRequired,
-  event: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({
-  events: state.events.item
-})
 
-export default connect(mapStateToProps, { createEvent, fetchEvents })(EventForm);
+export default connect(null, { createEvent })(EventForm);

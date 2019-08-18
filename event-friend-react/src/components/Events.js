@@ -10,6 +10,15 @@ class Events extends Component {
     this.props.fetchEvents();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.newEvent) {
+      this.props.events.unshift(nextProps.newEvent);
+    }
+    if (nextProps.deletedId) {
+      
+    }
+  }
+
   render() {
     let content = this.props.events.map(event => (
       <Event
@@ -34,11 +43,15 @@ class Events extends Component {
 
 Events.propTypes = {
   fetchEvents: PropTypes.func.isRequired,
-  events: PropTypes.array.isRequired
+  events: PropTypes.array.isRequired,
+  newEvent: PropTypes.object,
+  deletedId: PropTypes.number
 }
 
 const mapStateToProps = state => ({
-  events: state.events.items
+  events: state.events.items,
+  newEvent: state.events.item,
+  deletedId: state.events.deletedId
 })
 
 export default connect(mapStateToProps, { fetchEvents })(Events);

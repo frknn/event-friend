@@ -1,8 +1,9 @@
-import { FETCH_EVENTS, NEW_EVENT } from '../actions/types';
+import { FETCH_EVENTS, NEW_EVENT, DELETE_EVENT } from '../actions/types';
 
 const initialState = {
   items: [],
-  item: {}
+  item: {},
+  deletedId: 0
 }
 
 export default function (state = initialState, action) {
@@ -12,6 +13,17 @@ export default function (state = initialState, action) {
         ...state,
         items: action.payload
       }
+    case NEW_EVENT:
+      return {
+        ...state,
+        item: action.payload
+      }
+    case DELETE_EVENT:
+        return {
+          ...state,
+          items: state.items.filter(event => event.id !== action.payload)
+        }
+
     default:
       return state;
   }

@@ -1,6 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { deleteEvent,fetchEvents } from '../actions/eventActions';
 
 class Event extends Component {
+
+  onDeleteEvent = (e) => {
+    this.props.deleteEvent(this.props.id);
+  }
+
   render() {
 
     //Destructuring
@@ -11,6 +19,7 @@ class Event extends Component {
         <div className="card">
           <div className="card-header d-flex justify-content-between">
             <h4 className="d-inline">Post id: {id}</h4>
+            <i onClick={this.onDeleteEvent} className="fas fa-trash" style={{ cursor: "pointer", margin: "auto 10px" }}></i>
           </div>
 
           <div style={{ textAlign: "left" }} className="card-body">
@@ -32,4 +41,9 @@ class Event extends Component {
   }
 }
 
-export default Event;
+Event.propTypes = {
+  deleteEvent: PropTypes.func.isRequired,
+  fetchEvents: PropTypes.func.isRequired
+}
+
+export default connect(null, { deleteEvent,fetchEvents })(Event);
