@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { deleteEvent, fetchEvents } from '../actions/eventActions';
 
@@ -9,22 +10,27 @@ class Event extends Component {
     this.props.deleteEvent(this.props.id);
   }
 
+  onUpdateEvent = (e) => {
+
+  }
+
   render() {
 
     //Destructuring
     const { id, baslik, kacKisi, detay, etkinlikAdresi, il, ilce, bulusmaYeri } = this.props;
 
     return (
-      <div className="col-md-6 mt-3 mb-3" style={{float:"left"}}>
+      <div className="col-md-6 mt-3 mb-3" style={{ float: "left" }}>
         <div className="card">
           <div className="card-header d-flex justify-content-between">
-            <h4 className="d-inline">Post id: {id}</h4>
+            <h4 className="d-inline">{baslik}</h4>
+            <Link style={{ color: "black", margin: "10px 0px 10px auto" }} className="fas fa-edit" to={`/update/${id}`}>
+            </Link>
             <i onClick={this.onDeleteEvent} className="fas fa-trash" style={{ cursor: "pointer", margin: "auto 10px" }}></i>
           </div>
 
           <div style={{ textAlign: "left" }} className="card-body">
 
-            <p className="card-text"><b>Başlık:</b> {baslik}</p>
             <p className="card-text"><b>Aranan kişi sayısı:</b> {kacKisi}</p>
             <p className="card-text"><b>Detaylar:</b> {detay}</p>
             <p className="card-text"><b>Etkinlik Adresi:</b> {etkinlikAdresi}</p>

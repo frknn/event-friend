@@ -14,9 +14,6 @@ class Events extends Component {
     if (nextProps.newEvent) {
       this.props.events.unshift(nextProps.newEvent);
     }
-    if (nextProps.deletedId) {
-
-    }
   }
 
   render() {
