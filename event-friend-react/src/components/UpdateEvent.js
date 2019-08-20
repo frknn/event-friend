@@ -1556,6 +1556,7 @@ class UpdateEvent extends Component {
     }
 
     this.props.updateEvent(post);
+    this.props.history.push("/");
   }
 
   render() {

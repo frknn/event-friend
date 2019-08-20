@@ -3,17 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createEvent } from '../actions/eventActions';
 
-const clearFields = {
-  baslik: "",
-  adres: "",
-  bulusma: "",
-  il: "",
-  ilce: "",
-  kisi: 0,
-  detay: "",
-  secilenSehir: ""
-}
-
 class EventForm extends Component {
 
   constructor(props) {
@@ -1531,7 +1520,7 @@ class EventForm extends Component {
     }
 
     this.props.createEvent(post);
-    this.setState(clearFields);
+    this.props.history.push("/");
   }
 
   render() {

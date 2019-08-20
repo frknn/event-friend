@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Events from './components/Events';
 import EventForm from './components/EventForm';
@@ -18,9 +18,12 @@ class App extends Component {
           <div className="App">
             <div className="container">
               <Header />
-              <Route exact path="/" component={()=><Events/>} />
-              <Route exact path="/postevent" component={()=><EventForm/>} />
-              <Route exact path="/update/:id" render={(props)=><UpdateEvent {...props}/>} />
+              <Switch>
+                <Route exact path="/" component={() => <Events />} />
+                <Route exact path="/postevent" render={(props) => <EventForm {...props} />} />
+                <Route exact path="/update/:id" render={(props) => <UpdateEvent {...props} />} />
+                <Route render={()=><div>Page Not Found!</div>}/>
+              </Switch>
             </div>
           </div>
         </Provider>
