@@ -20,7 +20,7 @@ class App extends Component {
               <Header />
               <Switch>
                 <Route exact path="/" component={() => <Events />} />
-                <Route exact path="/postevent" render={(props) => <EventForm {...props} />} />
+                <Route exact path="/post" render={(props) => <EventForm {...props} />} />
                 <Route exact path="/update/:id" render={(props) => <UpdateEvent {...props} />} />
                 <Route render={()=><div>Page Not Found!</div>}/>
               </Switch>

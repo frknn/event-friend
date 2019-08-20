@@ -10,18 +10,13 @@ class Event extends Component {
     this.props.deleteEvent(this.props.id);
   }
 
-  onUpdateEvent = (e) => {
-
-  }
-
   render() {
 
     //Destructuring
     const { id, baslik, kacKisi, detay, etkinlikAdresi, il, ilce, bulusmaYeri } = this.props;
 
     return (
-      <div className="col-md-6 mt-3 mb-3" style={{ float: "left" }}>
-        <div className="card">
+        <div className="card" style={{display:""}}>
           <div className="card-header d-flex justify-content-between">
             <h4 className="d-inline">{baslik}</h4>
             <Link style={{ color: "black", margin: "10px 0px 10px auto" }} className="fas fa-edit" to={`/update/${id}`}>
@@ -40,8 +35,6 @@ class Event extends Component {
 
           </div>
         </div>
-      </div>
-
     )
   }
 }

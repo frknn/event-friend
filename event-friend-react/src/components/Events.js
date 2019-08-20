@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchEvents } from '../actions/eventActions'
+import '../styles/Events.scss';
 import Event from "./Event";
 
 class Events extends Component {
@@ -34,7 +35,7 @@ class Events extends Component {
       <div className="container">
         <h1 className="mt-3">Etkinlikler</h1>
         <hr />
-        <div> 
+        <div className="card-columns">
           {content}
         </div>
       </div>
