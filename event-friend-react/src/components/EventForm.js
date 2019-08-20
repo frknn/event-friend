@@ -1481,13 +1481,23 @@ class EventForm extends Component {
       bulusma: "",
       il: "",
       ilce: "",
-      kisi: 0,
+      kisi: 1,
       detay: "",
-      secilenSehir: ""
+      secilenSehir: "",
+      error: false
     }
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  validateForm = () => {
+    const { baslik, bulusma, il, ilce, detay } = this.state;
+
+    if (baslik === "" || bulusma === "" || il === "" || ilce === "" || detay === "") {
+      return false;
+    }
+    return true;
   }
 
   onChange(e) {
@@ -1519,6 +1529,11 @@ class EventForm extends Component {
       kacKisi: this.state.kisi
     }
 
+    if (!this.validateForm()) {
+      this.setState({ error: true })
+      return;
+    }
+
     this.props.createEvent(post);
     this.props.history.push("/");
   }
@@ -1527,7 +1542,13 @@ class EventForm extends Component {
     return (
       <div>
         <h1 className="mt-3">Ne Düzenliyorsun?</h1>
-        <hr/>
+        <hr />
+        {
+          this.state.error ?
+            <div className="alert alert-danger">
+              Lütfen boş alanları doldurun.
+        </div> : null
+        }
         <form onSubmit={this.onSubmit} className="col-md-8 mx-auto">
           <div className="form-group">
             <label htmlFor="inputBaslik">Başlık</label>
@@ -1558,7 +1579,7 @@ class EventForm extends Component {
             </div>
             <div className="form-group col-md-3">
               <label htmlFor="inputKisi">Kaç kişi?</label>
-              <input onChange={this.onChange} type="number" min="0" className="form-control" id="inputKisi" name="kisi" value={this.state.kisi} />
+              <input onChange={this.onChange} type="number" min="1" className="form-control" id="inputKisi" name="kisi" value={this.state.kisi} />
             </div>
           </div>
           <div className="form-group">

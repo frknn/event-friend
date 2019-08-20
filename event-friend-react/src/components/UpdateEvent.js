@@ -1482,13 +1482,22 @@ class UpdateEvent extends Component {
       bulusma: "",
       il: "",
       ilce: "",
-      kisi: 0,
+      kisi: 1,
       detay: "",
       secilenSehir: ""
     }
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  validateForm = () => {
+    const { baslik, bulusma, il, ilce, detay } = this.state;
+
+    if (baslik === "" || bulusma === "" || il === "" || ilce === "" || detay === "") {
+      return false;
+    }
+    return true;
   }
 
   onChange(e) {
@@ -1508,14 +1517,14 @@ class UpdateEvent extends Component {
   }
 
   componentDidMount = async () => {
-    const {id} = this.props.match.params;
+    const { id } = this.props.match.params;
 
     const response = await fetch(`http://localhost:8080/event/${id}`)
     const data = await response.json()
 
     console.log(data);
 
-    const {baslik,bulusmaYeri,detay,etkinlikAdresi,il,ilce,kacKisi} = data;
+    const { baslik, bulusmaYeri, detay, etkinlikAdresi, il, ilce, kacKisi } = data;
 
     this.setState({
       baslik: baslik,
@@ -1537,9 +1546,9 @@ class UpdateEvent extends Component {
         })
       }
     })
-    
+
   }
-  
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -1555,6 +1564,11 @@ class UpdateEvent extends Component {
       kacKisi: this.state.kisi
     }
 
+    if (!this.validateForm()) {
+      this.setState({ error: true })
+      return;
+    }
+
     this.props.updateEvent(post);
     this.props.history.push("/");
   }
@@ -1563,7 +1577,12 @@ class UpdateEvent extends Component {
     return (
       <div>
         <h1 className="mt-3">Düzenleme Formu</h1>
-        <hr/>
+        <hr />
+        {
+          this.state.error ? <div className="alert alert-danger">
+            Lütfen boş alanları doldurun.
+        </div> : null
+        }
         <form onSubmit={this.onSubmit} className="col-md-8 mx-auto">
           <div className="form-group">
             <label htmlFor="inputBaslik">Başlık</label>
@@ -1594,7 +1613,7 @@ class UpdateEvent extends Component {
             </div>
             <div className="form-group col-md-3">
               <label htmlFor="inputKisi">Kaç kişi?</label>
-              <input onChange={this.onChange} type="number" min="0" className="form-control" id="inputKisi" name="kisi" value={this.state.kisi} />
+              <input onChange={this.onChange} type="number" min="1" className="form-control" id="inputKisi" name="kisi" value={this.state.kisi} />
             </div>
           </div>
           <div className="form-group">
