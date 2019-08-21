@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Events from './components/Events';
 import EventForm from './components/EventForm';
+import RegistrationForm from './components/RegistrationForm';
+import LoginForm from './components/LoginForm';
 import UpdateEvent from './components/UpdateEvent';
 import Header from './components/layout/Header';
 
@@ -16,13 +18,15 @@ class App extends Component {
       <Router>
         <Provider store={store} >
           <div className="App">
+            <Header />
             <div className="container">
-              <Header />
               <Switch>
-                <Route exact path="/" component={() => <Events />} />
+                <Route exact path="/" render={(props) => <RegistrationForm {...props}/>} />
+                <Route exact path="/login" render={(props) => <LoginForm {...props} />}  />
+                <Route exact path="/home" component={() => <Events />} />
                 <Route exact path="/post" render={(props) => <EventForm {...props} />} />
                 <Route exact path="/update/:id" render={(props) => <UpdateEvent {...props} />} />
-                <Route render={()=><div>Page Not Found!</div>}/>
+                <Route render={() => <div>Page Not Found!</div>} />
               </Switch>
             </div>
           </div>

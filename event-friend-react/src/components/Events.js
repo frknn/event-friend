@@ -7,7 +7,7 @@ import Event from "./Event";
 
 class Events extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchEvents();
   }
 

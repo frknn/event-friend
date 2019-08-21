@@ -1535,13 +1535,13 @@ class EventForm extends Component {
     }
 
     this.props.createEvent(post);
-    this.props.history.push("/");
+    this.props.history.push("/home");
   }
 
   render() {
     return (
       <div>
-        <h1 className="mt-3">Ne Düzenliyorsun?</h1>
+        <h1 className="mt-3">Etkinlik Oluştur</h1>
         <hr />
         {
           this.state.error ?

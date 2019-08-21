@@ -26,6 +26,7 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private String name;
     private String lastname;
+    private String email;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name="user_authorities",

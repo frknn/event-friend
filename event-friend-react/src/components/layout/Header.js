@@ -6,7 +6,7 @@ export default function Header() {
     <div>
       <header style={headerStyle}>
         <h1>EVENT FRIEND</h1>
-        <Link style={linkStyle} to="/">Etkinlikleri Gör</Link> | <Link style={linkStyle} to="/post">Etkinlik Oluştur</Link>
+        <Link style={linkStyle} to="/home">Etkinlikleri Gör</Link> | <Link style={linkStyle} to="/post">Etkinlik Oluştur</Link>
       </header>
     </div>
   )

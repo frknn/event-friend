@@ -1,7 +1,13 @@
 import { FETCH_EVENTS, NEW_EVENT, DELETE_EVENT, UPDATE_EVENT } from './types';
 
 export const fetchEvents = () => dispatch => {
-  fetch("http://localhost:8080/event")
+  fetch("http://localhost:8080/event",
+    {
+      headers:
+      {
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      }
+    })
     .then(res => res.json())
     .then(events =>
       dispatch({
@@ -15,7 +21,8 @@ export const createEvent = eventData => dispatch => {
   fetch("http://localhost:8080/event", {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
     },
     body: JSON.stringify(eventData)
   })
@@ -30,7 +37,14 @@ export const createEvent = eventData => dispatch => {
 
 export const deleteEvent = id => dispatch => {
   console.log("SİLİNİYOR!");
-  fetch(`http://localhost:8080/event/${id}`, { method: 'DELETE' })
+  fetch(`http://localhost:8080/event/${id}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      }
+    }
+  )
     .then(() =>
       dispatch({
         type: DELETE_EVENT,
@@ -44,7 +58,8 @@ export const updateEvent = event => dispatch => {
   fetch("http://localhost:8080/event", {
     method: 'PUT',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'Authorization': 'bearer ' + localStorage.getItem('access_token')
     },
     body: JSON.stringify(event)
   })

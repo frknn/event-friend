@@ -1519,7 +1519,7 @@ class UpdateEvent extends Component {
   componentDidMount = async () => {
     const { id } = this.props.match.params;
 
-    const response = await fetch(`http://localhost:8080/event/${id}`)
+    const response = await fetch(`http://localhost:8080/event/${id}`,{headers:{'Authorization': 'bearer ' + localStorage.getItem('access_token')}})
     const data = await response.json()
 
     console.log(data);
@@ -1570,7 +1570,7 @@ class UpdateEvent extends Component {
     }
 
     this.props.updateEvent(post);
-    this.props.history.push("/");
+    this.props.history.push("/home");
   }
 
   render() {
