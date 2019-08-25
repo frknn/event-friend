@@ -1,4 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loggedIn } from '../actions/loginoutActions';
+
 
 class LoginForm extends Component {
 
@@ -28,31 +31,59 @@ class LoginForm extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
 
     const { kullaniciadi, sifre } = this.state;
 
-    let url = "http://localhost:8080/oauth/token?grant_type=password" + "&username=" + kullaniciadi + "&password=" + sifre;
+    let url = `http://localhost:8080/oauth/token?grant_type=password&username=${kullaniciadi}&password=${sifre}`;
+
+    let options = {
+      headers: {
+        'Authorization': 'Basic ZnVya2FuOjEyMzQ1Ng=='
+      }
+    }
 
     if (!this.validateForm()) {
       this.setState({ error: true })
       return;
     }
 
-    fetch(url, {
+    // this.props.logIn(url, options);
+
+    const res = await fetch(url, {
       headers: {
         'Authorization': 'Basic ZnVya2FuOjEyMzQ1Ng=='
       }
     })
-      .then(res => res.json())
-      .then(loggedInUser => {
-        console.log(loggedInUser);
-        localStorage.setItem('access_token',loggedInUser.access_token);
-        console.log('localstorageden gelen: ' + localStorage.getItem('access_token'));
-      })
 
+    const loggedInUser = await res.json();
+
+    localStorage.setItem('access_token', loggedInUser.access_token);
+    console.log(loggedInUser);
+
+    let userurl = "http://localhost:8080/user";
+    let useroptions = {
+      headers: {
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      }
+    }
+
+    // this.props.getCurrUser(userurl,useroptions);
+
+    const currUser = await fetch("http://localhost:8080/user", {
+      headers: {
+        'Authorization': 'bearer ' + localStorage.getItem('access_token')
+      }
+    });
+    const myCurrUser = await currUser.json();
+    console.log(myCurrUser.name);
+    localStorage.setItem('current_user', JSON.stringify(myCurrUser));
+    console.log(JSON.parse(localStorage.getItem('current_user')));
+
+    this.props.loggedIn();
     this.props.history.push("/home");
+    // console.log(this.props.currentUser);
   }
 
   render() {
@@ -87,4 +118,9 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+  isVisible: state.logs.isVisible
+})
+
+export default connect(mapStateToProps, { loggedIn, })(LoginForm);
+// export default LoginForm;

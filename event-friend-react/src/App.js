@@ -18,7 +18,7 @@ class App extends Component {
       <Router>
         <Provider store={store} >
           <div className="App">
-            <Header />
+            <Header/>
             <div className="container">
               <Switch>
                 <Route exact path="/" render={(props) => <RegistrationForm {...props}/>} />

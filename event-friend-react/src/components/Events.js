@@ -53,7 +53,8 @@ Events.propTypes = {
 const mapStateToProps = state => ({
   events: state.events.items,
   newEvent: state.events.item,
-  deletedId: state.events.deletedId
+  deletedId: state.events.deletedId,
+  // currentUser: state.logs.currUser
 })
 
 export default connect(mapStateToProps, { fetchEvents })(Events);

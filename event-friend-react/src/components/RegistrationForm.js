@@ -32,7 +32,7 @@ class RegistrationForm extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  onSubmit = (e) => {
+  onSubmit = async (e) => {
     e.preventDefault();
 
     const { ad, soyad, email, kullaniciadi, sifre } = this.state;
@@ -50,15 +50,16 @@ class RegistrationForm extends Component {
       return;
     }
 
-    fetch("http://localhost:8080/registration", {
+    const res = await fetch("http://localhost:8080/registration", {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
       },
       body: JSON.stringify(newUser)
     })
-    .then(res => res.json())
-    .then(user => console.log(user));
+
+    const user = await res.json();
+    console.log(user);
 
     this.props.history.push("/login");
   }

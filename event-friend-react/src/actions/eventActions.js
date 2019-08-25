@@ -10,7 +10,7 @@ export const fetchEvents = () => dispatch => {
     })
     .then(res => res.json())
     .then(events =>
-      dispatch({
+    dispatch({
         type: FETCH_EVENTS,
         payload: events
       })
