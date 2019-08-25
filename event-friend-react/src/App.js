@@ -9,6 +9,7 @@ import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
 import UpdateEvent from './components/UpdateEvent';
 import Header from './components/layout/Header';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 import store from './store';
 
@@ -18,14 +19,14 @@ class App extends Component {
       <Router>
         <Provider store={store} >
           <div className="App">
-            <Header/>
+            <Header />
             <div className="container">
               <Switch>
-                <Route exact path="/" render={(props) => <RegistrationForm {...props}/>} />
-                <Route exact path="/login" render={(props) => <LoginForm {...props} />}  />
-                <Route exact path="/home" component={() => <Events />} />
-                <Route exact path="/post" render={(props) => <EventForm {...props} />} />
-                <Route exact path="/update/:id" render={(props) => <UpdateEvent {...props} />} />
+                <Route exact path="/" render={(props) => <RegistrationForm {...props} />} />
+                <Route exact path="/login" render={(props) => <LoginForm {...props} />} />
+                <ProtectedRoute exact path="/home" component={() => <Events />} />
+                <ProtectedRoute exact path="/post" component={(props) => <EventForm {...props} />} />
+                <ProtectedRoute exact path="/update/:id" component={(props) => <UpdateEvent {...props} />} />
                 <Route render={() => <div>Page Not Found!</div>} />
               </Switch>
             </div>

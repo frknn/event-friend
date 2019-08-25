@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 
 class RegistrationForm extends Component {
 
@@ -108,7 +110,8 @@ class RegistrationForm extends Component {
               <input onChange={this.onChange} type="password" className="form-control" name="sifretekrar" id="inputPasswordVerify" placeholder="Şifrenizi tekrar giriniz" value={this.state.sifretekrar} />
             </div>
 
-            <button type="submit" className="btn btn-primary">Kayıt Ol</button>
+            <button type="submit" className="btn btn-primary">Kayıt Ol</button><br/><br/>
+            <span>Hesabın varsa <Link to="/login">giriş yap.</Link></span>
           </form>
         </div>
       </div>

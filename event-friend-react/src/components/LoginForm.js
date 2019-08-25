@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loggedIn } from '../actions/loginoutActions';
+import { Link } from 'react-router-dom';
 
 
 class LoginForm extends Component {
@@ -110,7 +111,8 @@ class LoginForm extends Component {
               <input onChange={this.onChange} type="password" className="form-control" name="sifre" id="inputPassword" placeholder="Şifrenizi giriniz" value={this.state.sifre} />
             </div>
 
-            <button type="submit" className="btn btn-primary">Giriş</button>
+            <button type="submit" className="btn btn-primary">Giriş</button><br/><br/>
+            <span>Hesabın yok mu? <Link to="/">Kayıt ol.</Link></span>
           </form>
         </div>
       </div>
