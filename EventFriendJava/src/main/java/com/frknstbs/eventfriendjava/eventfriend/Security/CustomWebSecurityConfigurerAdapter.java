@@ -41,4 +41,5 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     public BCryptPasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

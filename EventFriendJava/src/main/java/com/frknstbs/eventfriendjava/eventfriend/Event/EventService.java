@@ -3,7 +3,6 @@ package com.frknstbs.eventfriendjava.eventfriend.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Executable;
 import java.util.List;
 import java.util.Optional;
 

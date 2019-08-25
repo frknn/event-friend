@@ -1,7 +1,6 @@
 package com.frknstbs.eventfriendjava.eventfriend.Security;
 
 import com.frknstbs.eventfriendjava.eventfriend.Security.user_details.CustomUserDetailsService;
-import jdk.nashorn.internal.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -16,6 +15,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.web.cors.CorsConfiguration;
@@ -60,7 +61,7 @@ public class CustomAuthorizationServerConfigurerAdapter extends AuthorizationSer
          .tokenStore(tokenStore)
          .authenticationManager(authenticationManager)
          .userDetailsService(customUserDetailsService)
-         .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
+         .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST, HttpMethod.DELETE);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class CustomAuthorizationServerConfigurerAdapter extends AuthorizationSer
         configurer.inMemory()
          .withClient(CLIENT_ID)
          .secret(bCryptPasswordEncoder.encode(CLIENT_SECRET))
-         .authorizedGrantTypes(GRANT_TYPE)
+         .authorizedGrantTypes(GRANT_TYPE, "authorization_code", "refresh_token")
          .scopes(SCOPE)
          .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
          .refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
@@ -98,5 +99,12 @@ public class CustomAuthorizationServerConfigurerAdapter extends AuthorizationSer
     public TokenStore tokenStore(){
         return new JdbcTokenStore(dataSource);
     }
+
+    @Bean
+    public ConsumerTokenServices tokenServices(){
+        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore());
+        return defaultTokenServices;
+    };
 
 }
