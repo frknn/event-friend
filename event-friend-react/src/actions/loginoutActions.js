@@ -13,11 +13,10 @@ import { LOG_IN, LOG_OUT, CURR_USER } from './types';
 
 
 export const loggedIn = () => dispatch => {
-  let isvisib;
-  localStorage.getItem('current_user') === null ? isvisib = false : isvisib=true
+  let isvisib = false;
   dispatch({
     type: LOG_IN,
-    payload: isvisib
+    payload: localStorage.getItem('current_user') ? !isvisib : isvisib
   })
 } 
 

@@ -20,8 +20,8 @@ class Events extends Component {
   render() {
     let content = this.props.events.map(event => (
       <Event
-        key={event.id}
-        id={event.id}
+        key={event._id}
+        id={event._id}
         baslik={event.baslik}
         kacKisi={event.kacKisi}
         detay={event.detay}

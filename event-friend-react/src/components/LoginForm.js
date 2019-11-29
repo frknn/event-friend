@@ -10,9 +10,10 @@ class LoginForm extends Component {
     super(props);
 
     this.state = {
-      kullaniciadi: "",
-      sifre: "",
-      error: false
+      email: "",
+      password: "",
+      error: false,
+      loginerror: false
     }
 
     this.onChange = this.onChange.bind(this);
@@ -20,9 +21,9 @@ class LoginForm extends Component {
   }
 
   validateForm = () => {
-    const { kullaniciadi, sifre } = this.state;
+    const { email, password } = this.state;
 
-    if (kullaniciadi === "" || sifre === "") {
+    if (email === "" || password === "") {
       return false;
     }
     return true;
@@ -35,53 +36,51 @@ class LoginForm extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
 
-    const { kullaniciadi, sifre } = this.state;
+    const { email, password } = this.state;
 
-    let url = `http://localhost:8080/oauth/token?grant_type=password&username=${kullaniciadi}&password=${sifre}`;
 
-    let options = {
-      headers: {
-        'Authorization': 'Basic ZnVya2FuOjEyMzQ1Ng=='
-      }
-    }
+    let url = `http://localhost:5000/users/login`;
 
     if (!this.validateForm()) {
       this.setState({ error: true })
       return;
-    }
+    } else { this.setState({ error: false }) }
 
-    // this.props.logIn(url, options);
 
-    const res = await fetch(url, {
+    const res = await fetch(url,{
+      method: 'POST',
       headers: {
-        'Authorization': 'Basic ZnVya2FuOjEyMzQ1Ng=='
-      }
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({email: email, password: password})
     })
 
-    const loggedInUser = await res.json();
+    const response = await res.json();
 
-    localStorage.setItem('access_token', loggedInUser.access_token);
-    console.log(loggedInUser);
-
-    let userurl = "http://localhost:8080/user";
-    let useroptions = {
-      headers: {
-        'Authorization': 'bearer ' + localStorage.getItem('access_token')
-      }
+    if (!response["token"]) {
+      this.setState({ loginerror: true })
+      console.log(response)
+      return;
     }
 
-    // this.props.getCurrUser(userurl,useroptions);
+    localStorage.setItem('access_token', response["token"]);
+    localStorage.setItem('current_user', JSON.stringify(response["user"]))
+    console.log(localStorage.getItem('access_token'))
+    console.log(localStorage.getItem('current_user'))
+    
 
-    const currUser = await fetch("http://localhost:8080/user", {
-      headers: {
-        'Authorization': 'bearer ' + localStorage.getItem('access_token')
-      }
-    });
-    const myCurrUser = await currUser.json();
-    console.log(myCurrUser.name);
-    localStorage.setItem('current_user', JSON.stringify(myCurrUser));
-    console.log(JSON.parse(localStorage.getItem('current_user')));
+    // const currUser = await fetch("http://localhost:8080/user", {
+    //   headers: {
+    //     'Authorization': 'bearer ' + localStorage.getItem('access_token')
+    //   }
+    // });
+    // const myCurrUser = await currUser.json();
+    // console.log(myCurrUser.name);
+    // localStorage.setItem('current_user', JSON.stringify(myCurrUser));
+    // console.log(JSON.parse(localStorage.getItem('current_user')));
 
+
+    this.setState({ loginerror: false })
     this.props.loggedIn();
     this.props.history.push("/home");
     // console.log(this.props.currentUser);
@@ -97,21 +96,23 @@ class LoginForm extends Component {
             this.state.error ?
               <div className="alert alert-danger">
                 Lütfen boş alanları doldurun
+              </div> : this.state.loginerror ? <div className="alert alert-danger">
+                Kullanıcı adı veya şifre yanlış!
               </div> : null
           }
           <form onSubmit={this.onSubmit} className="col-md-8 mx-auto mb-3">
 
             <div className="form-group">
-              <label htmlFor="inputUsername">Kullanıcı Adı</label>
-              <input onChange={this.onChange} type="text" className="form-control" name="kullaniciadi" id="inputUsername" placeholder="Kullanıcı adınızı giriniz" value={this.state.kullaniciadi} />
+              <label htmlFor="inputUsername">E-mail</label>
+              <input onChange={this.onChange} type="text" className="form-control" name="email" id="inputUsername" placeholder="Kullanıcı adınızı giriniz" value={this.state.kullaniciadi} />
             </div>
 
             <div className="form-group">
               <label htmlFor="inputPassword">Şifre</label>
-              <input onChange={this.onChange} type="password" className="form-control" name="sifre" id="inputPassword" placeholder="Şifrenizi giriniz" value={this.state.sifre} />
+              <input onChange={this.onChange} type="password" className="form-control" name="password" id="inputPassword" placeholder="Şifrenizi giriniz" value={this.state.sifre} />
             </div>
 
-            <button type="submit" className="btn btn-primary">Giriş</button><br/><br/>
+            <button type="submit" className="btn btn-primary">Giriş</button><br /><br />
             <span>Hesabın yok mu? <Link to="/">Kayıt ol.</Link></span>
           </form>
         </div>

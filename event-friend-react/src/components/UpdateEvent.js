@@ -1519,7 +1519,7 @@ class UpdateEvent extends Component {
   componentDidMount = async () => {
     const { id } = this.props.match.params;
 
-    const response = await fetch(`http://localhost:8080/event/${id}`,{headers:{'Authorization': 'bearer ' + localStorage.getItem('access_token')}})
+    const response = await fetch(`http://localhost:5000/events/${id}`,{headers:{'Authorization': 'Bearer ' + localStorage.getItem('access_token')}})
     const data = await response.json()
 
     console.log(data);

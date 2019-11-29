@@ -11,9 +11,8 @@ class RegistrationForm extends Component {
       ad: "",
       soyad: "",
       email: "",
-      kullaniciadi: "",
-      sifre: "",
-      sifretekrar: "",
+      password: "",
+      repassword: "",
       error: false
     }
 
@@ -22,9 +21,9 @@ class RegistrationForm extends Component {
   }
 
   validateForm = () => {
-    const { ad, soyad, email, kullaniciadi, sifre, sifretekrar } = this.state;
+    const { ad, soyad, email, password, repassword } = this.state;
 
-    if (ad === "" || soyad === "" || email === "" || kullaniciadi === "" || sifre === "" || sifretekrar === "" || sifre !== sifretekrar) {
+    if (ad === "" || soyad === "" || email === "" || password === "" || repassword === "" || password !== repassword) {
       return false;
     }
     return true;
@@ -37,14 +36,13 @@ class RegistrationForm extends Component {
   onSubmit = async (e) => {
     e.preventDefault();
 
-    const { ad, soyad, email, kullaniciadi, sifre } = this.state;
+    const { ad, soyad, email, password } = this.state;
 
     let newUser = {
-      name: ad,
-      lastname: soyad,
+      ad: ad,
+      soyad: soyad,
       email: email,
-      username: kullaniciadi,
-      password: sifre
+      password: password,
     }
 
     if (!this.validateForm()) {
@@ -52,7 +50,7 @@ class RegistrationForm extends Component {
       return;
     }
 
-    const res = await fetch("http://localhost:8080/registration", {
+    const res = await fetch("http://localhost:5000/users", {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -96,18 +94,13 @@ class RegistrationForm extends Component {
             </div>
 
             <div className="form-group">
-              <label htmlFor="inputUsername">Kullanıcı Adı</label>
-              <input onChange={this.onChange} type="text" className="form-control" name="kullaniciadi" id="inputUsername" placeholder="Kullanıcı adınızı giriniz" value={this.state.kullaniciadi} />
-            </div>
-
-            <div className="form-group">
               <label htmlFor="inputPassword">Şifre</label>
-              <input onChange={this.onChange} type="password" className="form-control" name="sifre" id="inputPassword" placeholder="Şifrenizi giriniz" value={this.state.sifre} />
+              <input onChange={this.onChange} type="password" className="form-control" name="password" id="inputPassword" placeholder="Şifrenizi giriniz" value={this.state.password} />
             </div>
 
             <div className="form-group">
               <label htmlFor="inputPasswordVerify">Şifre Tekrar</label>
-              <input onChange={this.onChange} type="password" className="form-control" name="sifretekrar" id="inputPasswordVerify" placeholder="Şifrenizi tekrar giriniz" value={this.state.sifretekrar} />
+              <input onChange={this.onChange} type="password" className="form-control" name="repassword" id="inputPasswordVerify" placeholder="Şifrenizi tekrar giriniz" value={this.state.repassword} />
             </div>
 
             <button type="submit" className="btn btn-primary">Kayıt Ol</button><br/><br/>

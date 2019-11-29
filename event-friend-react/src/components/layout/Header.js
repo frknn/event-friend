@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loggedOut,loggedIn } from '../../actions/loginoutActions';
+import { loggedOut, loggedIn } from '../../actions/loginoutActions';
 import store from '../../store';
 
 class Header extends Component {
@@ -16,32 +16,19 @@ class Header extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.loggedIn();
   }
 
   onClick = async (e) => {
-    const res = await fetch("http://localhost:8080/oauth/token",
+    const res = await fetch("http://localhost:5000/users/me/logoutall",
       {
-        method: 'DELETE',
+        method: 'POST',
         headers:
         {
-          'Authorization': 'Basic ZnVya2FuOjEyMzQ1Ng==',
-          'AuthorizationTok': 'Bearer ' + localStorage.getItem('access_token')
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token')
         }
       })
-
-    // let logOutUrl = "http://localhost:8080/oauth/token";
-    // let logOutOptions = {
-    //   method: 'DELETE',
-    //   headers:
-    //   {
-    //     'Authorization': 'Basic ZnVya2FuOjEyMzQ1Ng==',
-    //     'AuthorizationTok': 'Bearer ' + localStorage.getItem('acc_tok')
-    //   }
-    // }
-
-    // this.props.logOut(logOutUrl,logOutOptions);
 
     localStorage.removeItem('access_token');
     localStorage.removeItem('current_user');
@@ -56,7 +43,6 @@ class Header extends Component {
         <header style={headerStyle}>
 
           <h1>EVENT FRIEND</h1>
-          {/* localstorageı statee koymayı dene */}
           {this.props.isVisible ? <div><Link style={linkStyle} to="/home">Etkinlikleri Gör</Link> | <Link style={linkStyle} to="/post">Etkinlik Oluştur</Link> | <Link to="/" style={linkStyle} onClick={this.onClick}> Çıkış Yap </Link></div> : null}
 
         </header>
@@ -81,7 +67,7 @@ const mapStateToProps = state => ({
   isVisible: state.logs.isVisible
 })
 
-export default connect(mapStateToProps, { loggedOut,loggedIn })(Header);
+export default connect(mapStateToProps, { loggedOut, loggedIn })(Header);
 // export default Header;
 
 

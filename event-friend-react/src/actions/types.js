@@ -5,3 +5,5 @@ export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
 export const CURR_USER = 'CURR_USER';
+export const GET_APPLICANTS = 'GET_APPLICANTS';
+export const ADD_APPLICANTS = 'ADD_APPLICANTS';
